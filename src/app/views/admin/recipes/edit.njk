@@ -1,0 +1,95 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+
+    <form action="/admin/recipes?_method=PUT" method="POST" id="form-create" enctype="multipart/form-data">
+
+        <div class="container-create">
+
+            <div class="title-edit">
+                <h2>Editando receita</h2>
+                <div class="button">
+                    <button class="btn-delete" type="submit" form="form-delete">Deletar</button>
+                    <button class="btn-save" type="submit" form="form-create">Salvar receita</button>
+                </div>
+            </div>
+
+            <input type="hidden" name="id" value="{{item.id}}">
+
+            <div class="recipe-admin">
+                <div id="photos-field">
+                    <div id="photos-upload">
+                        <input id="photos-input" type="file" name="photos" multiple="multiple" accept="image/*" onchange="PhotosUpload.handleFileInput(event, 5)">
+                        <span class="material-icons">
+                            add
+                        </span>
+                    </div>
+
+                    <div id="photos-preview">
+                        {% if files %}
+                            {% for image in files %}
+                                <div class="photo" id="{{image.id}}">
+                                    <img src="{{image.src}}" alt="{{image.name}}">
+                                    <i class="material-icons" onclick="PhotosUpload.removeOldPhoto(event)">
+                                        close
+                                    </i>
+                                </div>
+                            {% endfor %}
+                            <input type="hidden" name="removed_files">
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Chef</h4>
+                <select name="chef_id" id="chefOptions">
+                    {% for chef in chefsOptions %}
+                        <option value="{{chef.id}}" placeholder="Selecione um chef" {% if item.chef_id == chef.id %} selected="selected" {% endif %}>{{chef.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Nome da receita</h4>
+                <input type="text" name="title" value="{{item.title}}" class="input-create">
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Ingredientes</h4>
+                <div id="ingredients">
+                    {% for ingredient in item.ingredients %}
+                        <div class="ingredient">
+                            <input type="text" name="ingredients[]" value="{{ingredient}}" class="input-create">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Modo de preparo</h4>
+                <div id="steps">
+                    {% for step in item.preparation %}
+                        <div class="prepare">
+                            <input type="text" name="step[]" value="{{step}}" class="input-create">
+                        </div>
+                    {% endfor %}
+                </div>
+                <button type="button" class="add-step">Adicionar novo passo</button>
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Informações adicionais</h4>
+                <textarea name="recipeInfo" class="input-info" form="form-create">{{item.information}}</textarea>
+            </div>
+
+        </div>
+
+    </form>
+
+    <form id="form-delete" action="/admin/recipes?_method=DELETE" method="POST">
+        <input type="hidden" name="id" value="{{item.id}}">
+    </form>
+
+{% endblock %}

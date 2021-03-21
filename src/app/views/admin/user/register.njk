@@ -1,0 +1,21 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+
+    <section class="user-register container form">
+        <form action="/admin/users" method="post" id="form-create">
+            <div class="title-admin">
+                <h2>Criar Usuário</h2>
+                <div class="button user-button">
+                    <button class="user-save-btn" type="submit">Salvar</button>
+                    <a href="#"><button class="user-cancel-btn" type="submit">Cancelar</button></a>
+                </div>
+                
+            </div>
+            
+            {% include "admin/user/fields.njk" %}
+            
+        </form>
+    </section>
+
+{% endblock %}

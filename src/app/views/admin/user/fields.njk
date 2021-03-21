@@ -1,0 +1,32 @@
+<div class="container-user">
+    <div>
+        <h4>Nome</h4>
+        <input type="text" name="name" value="{{user.name}}" class="input-create" placeholder="Digite o nome completo">
+    </div>
+
+    <div>
+        <h4>Email</h4>
+        <input type="email" name="email" value="{{user.email}}" class="input-create" placeholder="Digite o email">
+    </div>
+
+    {% if user %} 
+        <div class="input-isAdmin">
+            <input 
+                type="checkbox" 
+                name="is_admin" 
+                value="true" 
+                class="input-create" 
+                {% if user.is_admin == true %}
+                    checked
+                {% endif %}
+            ><h4>Administrador</h4>
+        </div>
+    {% else %}
+        <div class="input-isAdmin">
+            <input type="checkbox" name="is_admin" value="true" class="input-create"><h4>Administrador</h4>
+        </div>
+    {% endif %}
+</div>
+
+
+

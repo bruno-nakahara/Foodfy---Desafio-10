@@ -1,0 +1,51 @@
+{% extends "layout.njk" %}
+
+{% block search %}
+
+    <div class="search">
+        <form action="/main/search" method="get">
+            <input type="text" name="filter" placeholder="Buscar uma receita" value="{{filter}}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+    <div class="slogan">
+        <div class="slogan-content">
+            <h1>As melhores receitas</h1>
+            <p>Aprenda a construir os melhores pratos com receitas criadas por profissionais do mundo inteiro.</p>
+        </div>
+        <img src="/chef.png" alt="chef">
+
+    </div>
+
+    <div class="wrapper">
+        <p>Mais acessadas</p>
+    </div>
+
+    <div class="cards">
+
+        {% for item in items %}
+
+            <div class="card" id="{{item.id}}">
+                <div class="card-image">
+                    <img src="{{ item.src }}" alt="Image of {{ item.title }}">
+                </div>
+                <div class="card-content">
+                    <h4>{{ item.title }}</h4>
+                </div>
+                <div class="card-name">
+                    <p>por
+                        {{ item.chef }}</p>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    <script src="script.js"></script>
+
+{% endblock %}

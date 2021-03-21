@@ -1,0 +1,45 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+    <form action="/admin/chefs" method="post" enctype="multipart/form-data">
+
+        <div class="container-create">
+
+            <div class="title-admin">
+                <h2>Criando Chef</h2>
+                <button class="btn-save" type="submit">Salvar chef</button>
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Nome</h4>
+                <input type="text" name="name" value="" class="input-create">
+            </div>
+
+            <div class="recipe-admin">
+                <h4>Avatar</h4>
+                <div class="avatar-field">
+                    <div class="avatar-upload">
+                        <button type="button" class="btn-save">Enviar Avatar</button>
+                        <input class="inputHidden" type="file" name="photos" multiple="multiple" accept="image/*" onchange="PhotosUpload.handleFileInput(event, 1)">
+                    </div>
+                    <div id="photos-preview">
+                        {% if files %}
+                            {% for image in files %}
+                                <div class="photo" id="{{image.id}}">
+                                    <img src="{{image.src}}" alt="{{image.name}}">
+                                    <i class="material-icons" onclick="PhotosUpload.removeOldPhoto(event)">
+                                        close
+                                    </i>
+                                </div>
+                            {% endfor %}
+                            <input type="hidden" name="removed_files">
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </form>
+{% endblock %}

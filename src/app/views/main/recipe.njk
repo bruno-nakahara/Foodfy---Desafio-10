@@ -1,0 +1,72 @@
+{% extends "layout.njk" %}
+
+{% block search %}
+
+    <div class="search">
+        <form action="/main/search" method="get">
+            <input type="text" name="filter" placeholder="Buscar uma receita" value="{{filter}}">
+            <button type="submit">Buscar</button>
+        </form>
+    </div>
+
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="recipe-container">
+            <div class="recipe-image">
+                <img src="{{files[0].src}}" alt="Image of {{item.title}}">
+            </div>
+            <div class="recipe-title">
+                <h1>{{item.title}}</h1>
+            </div>
+            <div class="recipe-author">
+                <p>por
+                    {{item.chef}}</p>
+            </div>
+        </div>
+
+        <div class="title-ingredients">
+            <h3>Ingredientes</h3>
+            <div class="status" id="ingredients-list">
+                <p>Esconder</p>
+            </div>
+        </div>
+
+        <div class="ingredients-conteiner">
+            <ul id="ingredients">
+                {% for ingredient in item.ingredients %}
+                    <li>{{ingredient}};</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="title-preparation">
+            <h3>Modo de preparo</h3>
+            <div class="status" id="preparation-list">
+                <p>Esconder</p>
+            </div>
+        </div>
+
+        <div class="preparation">
+            <ul id="preparation">
+                {% for instruct in item.preparation %}
+                    <li>{{instruct}}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="title-info">
+            <h3>Informações adicionais</h3>
+            <div class="status" id="info-paragraph">
+                <p>Esconder</p>
+            </div>
+        </div>
+
+        <div class="info">
+            <p id="add-info">{{item.information}}</p>
+        </div>
+
+    </div>
+{% endblock %}

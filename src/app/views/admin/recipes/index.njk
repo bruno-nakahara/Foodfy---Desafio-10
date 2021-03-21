@@ -1,0 +1,36 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+    <div class="container-create">
+
+        <div class="title-admin">
+            <h2>Gerenciar receitas</h2>
+            <a href="/admin/recipes/create" class="link-create">Criar receita</a>
+        </div>
+
+        <div class="cards-recipes">
+
+            {% for item in items %}
+
+                <div class="card-recipe" id="{{ item.id }}">
+                    <div class="card-img">
+                        <img src="{{ item.src }}" alt="Image of {{ item.title }}">
+                    </div>
+                    <div>
+                        <div class="card-food">
+                            <h3>{{ item.title }}</h3>
+                        </div>
+                        <div class="card-author">
+                            <p>por
+                                {{ item.chef }}</p>
+                        </div>
+                        <a class="link-detail" href="/admin/recipes/{{ item.id }}">Visualizar</a>
+                    </div>
+                </div>
+
+            {% endfor %}
+
+        </div>
+    </div>
+
+{% endblock %}

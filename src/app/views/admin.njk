@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Foodfy</title>
+        {% include "parts/styles.njk" %}
+    
+    </head>
+
+    <body>
+        <div>
+            {% include "parts/messages.njk" %}
+            <header class="ignoreCss">
+                <div id="header-container">
+                    <a href="/main/index"><img src="/new-logo.png" alt="Logo"></a>
+                    <div class="links-admin">
+                        <a href="/admin/recipes">RECEITAS</a>
+                        <a href="/admin/chefs/show">CHEFS</a>
+                        <a href="/admin/users">USUÁRIOS</a>
+                    </div>
+                </div>
+            </header>
+        </div>
+         
+        {% block content %}
+        {% endblock %}
+        
+        <script src="/script.js"></script>
+    </body>
+
+</html>

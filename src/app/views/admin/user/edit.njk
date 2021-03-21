@@ -1,0 +1,27 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+
+    <section class="user-edit container form">
+        <form action="/admin/users/{{user.id}}?_method=PUT"" method="POST" id="form-create">
+            <div class="title-admin">
+                <h2>Atualizar Usuário</h2>
+                <div class="button user-button">
+                    {% if user.is_admin == true %}
+                        <button class="user-delete-btn" type="submit" form="form-user-delete">Deletar</button>
+                    {% endif %}
+                    <button class="user-save-btn" type="submit">Salvar</button>
+                </div>
+                
+            </div>
+            
+            {% include "admin/user/fields.njk" %}
+            
+        </form>
+
+        <form id="form-user-delete" action="/admin/users?_method=DELETE" method="POST">
+            <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+    </section>
+
+{% endblock %}

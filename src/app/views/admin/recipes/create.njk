@@ -1,0 +1,9 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+
+    <form action="/admin/recipes" method="post" id="form-create" enctype="multipart/form-data">
+        {% include "admin/recipes/fields-create.njk" %}
+    </form>
+
+{% endblock %}
