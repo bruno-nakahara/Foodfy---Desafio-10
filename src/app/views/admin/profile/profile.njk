@@ -1,0 +1,19 @@
+{% extends "admin.njk" %}
+
+{% block content %}
+
+    <section class="user-profile container form">
+        <form action="/admin/profile?_method=PUT" method="post" id="form-create">
+            <div class="title-admin">
+                <h2>Bem vindo {{user.name}}</h2>
+                <div class="button user-button">
+                    <button class="profile-save-btn" type="submit">Salvar</button>
+                </div>
+            </div>
+            
+            {% include "admin/profile/fields.njk" %}
+            <input type="hidden" name="id" value="{{user.id}}">
+        </form>
+    </section>
+
+{% endblock %}

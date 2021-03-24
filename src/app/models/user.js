@@ -56,7 +56,25 @@ module.exports = {
         const results = await db.query(`SELECT * FROM users WHERE id = $1`, [id])
         return results.rows[0]
     },
-    async update(data) {
-        const results = await db.query(`UPDATE users SET`)
+    async update(id, data) {
+        let query = `UPDATE users SET`
+
+        Object.keys(data).map((key, index, array) => {
+            if ((index + 1) < array.length) {
+                query = `${query}
+                    ${key} = '${data[key]}',
+                `
+            } else {
+                query = `${query}
+                    ${key} = '${data[key]}'
+                    WHERE id = ${id}
+                `
+            }
+        })
+        await db.query(query)
+        return
+    },
+    async delete(id) {
+       await db.query('DELETE FROM users WHERE id = $1', [id])
     }
 }

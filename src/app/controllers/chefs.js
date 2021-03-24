@@ -57,6 +57,32 @@ module.exports = {
             console.log(err)
         }
     },
+    async showToUser(req, res) {
+        try {
+            let chefsData = []
+            const results = await Chef.all()
+            const chefs = results.rows.map(async chef => {
+                const chefFile = await Chef.files(chef.file_id)
+                const file = chefFile.rows[0]
+                chef = {
+                    ...chef,
+                    src: `${req.protocol}://${req.headers.host}${file.path.replace("public", "")}`,
+                }
+                return chefsData.push({
+                    ...chef,
+                })
+
+            })
+            await Promise.all(chefs)
+
+            if (!chefs) return res.send('Chefs not found!')
+
+            return res.render('admin/chefs/chefsToUser', { chefs: chefsData })
+
+        } catch (err) {
+            console.log(err)
+        }
+    },
     async detail(req, res) {
         try {
             let results = await Chef.find(req.params.id)

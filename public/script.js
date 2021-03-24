@@ -16,7 +16,6 @@ const PhotosUpload = {
 
         Array.from(fileList).forEach(file => {
             PhotosUpload.files.push(file)
-
             const reader = new FileReader()
 
             reader.onload = () => {

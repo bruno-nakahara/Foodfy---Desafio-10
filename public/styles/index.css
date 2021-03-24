@@ -288,7 +288,8 @@ footer p {
 
 #header-container .links-admin a {
     color: #FFF;
-    font-family: 'Roboto', sans-serif;
+    font-family: Helvetica;
+    font-size: 15px;
     text-decoration: none;
     margin-right: 30px;
 }
@@ -713,6 +714,21 @@ form .container-create .recipe-admin #photos-field #photos-preview img {
     opacity: 1;
 }
 
+/*User - Page */
+.logout-btn { 
+    position: absolute;
+    top: 29px;
+    right: 50px;
+    width: 40px;
+    height: 20px;
+    text-align: right;
+    text-decoration: none;
+    font-size: 15px;
+    color: #FFFFFF;
+    font-weight: bold;
+    background: none;
+}
+
 /* User Register */
 .user-register.container.form {
     width: 940px;
@@ -734,21 +750,19 @@ form .container-create .recipe-admin #photos-field #photos-preview img {
     font-weight: bold;
 }
 
-.user-register.container.form a {
+.user-register.container.form .button.user-button a {
     text-decoration: none;
     width: 140px;
     height: 37px;
-}
-
-.user-register.container.form .button.user-button a button {
     font-family: Helvetica;
     font-weight: bold;
     font-size: 16px;
-    width: 100%;
-    height: 100%;
     color: #FFFFFF;
     background-color: #8A8A8A;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .container-user {
@@ -847,6 +861,7 @@ form .container-create .recipe-admin #photos-field #photos-preview img {
     display: inline;   
 }
 
+.user-profile.container.form .button.user-button .profile-save-btn,
 .user-edit.container.form .button.user-button .user-save-btn {
     width: 139px;
     height: 37px;
@@ -870,4 +885,8 @@ form .container-create .recipe-admin #photos-field #photos-preview img {
     text-align: center;
     background: #DC4747;
     margin-right: 16px;
+}
+
+.user-profile.container.form {
+    width: 940px;
 }

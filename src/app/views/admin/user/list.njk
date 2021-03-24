@@ -12,7 +12,7 @@
 
         <div class="users-list">
             {% for user in users %}
-                <form id="form-user-delete" action="/admin/users?_method=DELETE" method="POST">
+                <form id="form-user-delete" action="/admin/users/{{user.id}}?_method=DELETE" method="POST">
                     <div class="user-field">
                         <h3>{{user.name}}</h3>
                         <p>{{user.email}}</p>

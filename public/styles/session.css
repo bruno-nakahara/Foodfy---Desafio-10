@@ -1,0 +1,75 @@
+.password-reset.container.form,
+.login-forgot.container.form,
+#header-login {
+    width: 500px;
+    margin: 35px auto 146px auto;
+}
+
+#header-login a {
+    display: flex;
+    justify-content: center;
+}
+
+main .login {
+    width: 500px; 
+}
+
+.password-reset.container.form .header,
+.login-forgot.container.form .header,
+.login.container.form .header {
+ margin-bottom: 35px;
+}
+
+.password-reset.container.form .header h3,
+.login-forgot.container.form .header h3,
+.login.container.form .header h3 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.password-reset.container.form input,
+.login-forgot.container.form input,
+.login.container.form input {
+    margin-bottom: 35px;
+}
+
+.login.container.form .footer-login {
+    width: 100%;
+    display: inline-flex;
+    justify-content: space-between;
+    
+}
+
+.login.container.form .footer-login a {
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 16px;
+    color: #969696;
+    margin: auto 0;
+}
+
+.password-reset.container.form button,
+.login-forgot.container.form button,
+.login.container.form .footer-login button {
+    width: 139px;
+    height: 37px;
+    background: #6558C3;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #FFFFFF;
+    text-align: center;
+}
+ 
+.password-reset.container.form,
+.login-forgot.container.form {
+    position: relative;
+}
+
+.password-reset.container.form button,
+.login-forgot.container.form button {
+    position: absolute;
+    right: 0;
+}
+

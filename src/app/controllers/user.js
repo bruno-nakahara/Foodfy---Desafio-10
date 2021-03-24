@@ -21,8 +21,7 @@ module.exports = {
                 }
             }
 
-            const userId = await User.create(userData)
-            req.session.userId = userId
+            await User.create(userData)
             
             await mailer.sendMail({
                 to: userData.email,
@@ -32,7 +31,7 @@ module.exports = {
                 <p>Clique no link abaixo para acessar sua conta ${userData.name}</p>
                 <p>Senha: ${password}</p>
                 <p>
-                    <a href="http://localhost:5000/admin/users" target="_blank">
+                    <a href="http://localhost:5000/admin/users/login" target="_blank">
                         Acesse a sua conta!
                     </a>
                 </p>
@@ -63,7 +62,16 @@ module.exports = {
     async edit(req, res) {
         try {
             const user = await User.find(req.params.id)
-            
+            let userData = false
+
+            if (req.session.admin == true && user.id == req.session.userId) {
+                userData = true
+            }
+
+            if (userData) {
+                return res.render("admin/profile/profile", { user } )
+            }
+
             return res.render("admin/user/edit", { user } )
         }catch(err) {
             console.error(err)
@@ -72,18 +80,38 @@ module.exports = {
     },
     async put(req, res) {
         try {
-            const results = await User.update(req.body)
+            const { user } = req
+            const results = await User.update(user.id, req.body)
 
-            return res.render("admin/user/list", {
+            const userUpdated = await User.find(user.id)
+
+            return res.render("admin/user/edit", {
+                user: userUpdated,
                 success: "Conta atualizada com sucesso!"
             })
 
         } catch (err) {
             console.error(err)
-            return res.render("admin/user/req.body.id/edit", {
+            return res.render(`admin/user/edit`, {
                 user: req.body,
                 error: "Erro ao atualizar!"
             })
+        }
+    },
+    async delete(req, res) {
+        try {
+            await User.delete(req.body.id)
+
+            return res.render("admin/user/register", {
+                success: "Conta deletada com sucesso!"
+            })
+
+        }catch(err) {
+            console.error(err)
+            return res.render("admin/user/edit", {
+                user: req.body,
+                error: "Error ao deletar!"
+            }) 
         }
     }
 }

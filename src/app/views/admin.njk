@@ -9,15 +9,19 @@
     <body>
         <div>
             {% include "parts/messages.njk" %}
-            <header class="ignoreCss">
+            <header class="ignoreCss"> 
+                <button class="logout-btn" type="submit" form="form-logout">SAIR</button>
                 <div id="header-container">
                     <a href="/main/index"><img src="/new-logo.png" alt="Logo"></a>
                     <div class="links-admin">
                         <a href="/admin/recipes">RECEITAS</a>
                         <a href="/admin/chefs/show">CHEFS</a>
                         <a href="/admin/users">USUÁRIOS</a>
+                        
                     </div>
+                    
                 </div>
+                <form id="form-logout" action="/admin/users/logout" method="POST"></form>
             </header>
         </div>
          

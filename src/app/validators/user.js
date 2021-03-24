@@ -34,6 +34,27 @@ async function post(req, res, next) {
     next()
 }
 
+async function put(req, res, next) {
+
+    const fillAllFields = checkAllFields(req.body)
+    if (fillAllFields) {
+        return res.render("admin/user/edit", fillAllFields)
+    }
+
+    const { id, email } = req.body
+
+    const user = await User.findOne({ where: { id } })
+    if (user.email != email) return res.render('admin/user/edit', {
+        user: req.body,
+        error: "Email inválido"
+    })
+
+    req.user = user
+
+    next()
+}
+
 module.exports = {
-    post
+    post,
+    put
 }

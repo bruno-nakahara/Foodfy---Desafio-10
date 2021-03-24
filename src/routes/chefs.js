@@ -2,19 +2,22 @@ const express = require('express')
 const routes = express.Router()
 const chefsControllers = require('../app/controllers/chefs')
 const multer = require('../app/middlewares/multer')
+const { onlyUsers, chefsForAdmin } = require("../app/middlewares/session")
 
-routes.get("/create", chefsControllers.create)
+routes.get("/create", chefsForAdmin, chefsControllers.create)
 
-routes.post("/", multer.array("photos", 1), chefsControllers.post)
+routes.post("/", chefsForAdmin, multer.array("photos", 1), chefsControllers.post)
 
-routes.get("/show", chefsControllers.show)
+routes.get("/show", chefsForAdmin, chefsControllers.show)
 
-routes.get("/:id", chefsControllers.detail)
+routes.get("/users/show", onlyUsers, chefsControllers.showToUser)
 
-routes.get("/:id/edit", chefsControllers.edit)
+routes.get("/:id", chefsForAdmin, chefsControllers.detail)
 
-routes.put("/", multer.array("photos", 1), chefsControllers.update)
+routes.get("/:id/edit", chefsForAdmin, chefsControllers.edit)
 
-routes.delete("/", chefsControllers.delete)
+routes.put("/", chefsForAdmin, multer.array("photos", 1), chefsControllers.update)
+
+routes.delete("/", chefsForAdmin, chefsControllers.delete)
 
 module.exports = routes

@@ -3,6 +3,7 @@ const routes = express.Router()
 const recipes = require('./recipes')
 const chefs = require('./chefs')
 const users = require('./users')
+const profile = require('./profile')
 const sitesControllers = require('../app/controllers/sites')
 
 //Main
@@ -25,6 +26,7 @@ routes.get("/main/search", sitesControllers.search)
 routes.use('/admin/chefs', chefs)
 routes.use('/admin/recipes', recipes)
 routes.use('/admin', users)
+routes.use('/admin/profile', profile)
 
 //Error
 routes.use(function (req, res) {

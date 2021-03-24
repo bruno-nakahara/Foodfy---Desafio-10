@@ -4,19 +4,18 @@ const RecipeFiles = require('../models/recipe-files')
 
 module.exports = {
     async post(req, res) {
-        const keys = Object.keys(req.body)
-
-        for (key of keys) {
-            if (req.body[key] == "" && key != "recipeInfo") {
-                return res.send('Please, fill all the fields')
-            }
-        }
-
-        if (req.files.length == 0)
-            return res.send('Please, send at least one image!')
-
         try {
-            let results = await Recipe.create(req.body)
+            if (req.files.length == 0) {
+                return res.render('admin/recipes/create', {
+                    user: req.body,
+                    error: 'Envie pelo menos 1 foto.'
+                })
+            }
+        
+            let results = await Recipe.create({
+                ...req.body,
+                user_id: req.session.userId
+            })
             const recipeId = results.rows[0].id
 
             const filesPromise = req.files.map(async file => {
@@ -27,10 +26,14 @@ module.exports = {
             })
             await Promise.all(filesPromise)
 
+            req.flash('success', "Receita criada com sucesso!")
             return res.redirect(`/admin/recipes/${recipeId}`)
 
         } catch (err) {
             console.log(err)
+            return res.render("admin/recipes/create", {
+                error: "Error!"
+            })
         }
     },
     async index(req, res) {
@@ -148,10 +151,14 @@ module.exports = {
             })
             await Promise.all(filesPromise)
 
+            req.flash('success', "Receita atualizada com sucesso!")
             return res.redirect(`/admin/recipes/${recipeId}`)
 
         } catch (err) {
             console.log(err)
+            return res.render("admin/recipes/edit", {
+                error: "Error!"
+            })
         }
     },
     async delete(req, res) {
@@ -164,10 +171,14 @@ module.exports = {
             await RecipeFiles.delete(req.body.id)
             await Recipe.delete(req.body.id)
 
+            req.flash('success', "Receita deletada com sucesso!")
             return res.redirect("/admin/recipes")
 
         } catch (err) {
-
+            console.error(err)
+            return res.render("admin/recipes/edit", {
+                error: "Error!"
+            })
         }
     },
     async cheflist(req, res) {

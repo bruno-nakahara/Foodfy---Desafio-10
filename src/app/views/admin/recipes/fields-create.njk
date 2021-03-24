@@ -43,14 +43,14 @@
 
     <div class="recipe-admin">
         <h4>Nome da receita</h4>
-        <input type="text" name="name" value="" class="input-create">
+        <input type="text" name="name" value="{{item.title}}" class="input-create">
     </div>
 
     <div class="recipe-admin">
         <h4>Ingredientes</h4>
         <div id="ingredients">
             <div class="ingredient">
-                <input type="text" name="ingredients[]" value="" class="input-create">
+                <input type="text" name="ingredients[]" value="{{item.ingredients}}" class="input-create">
             </div>
         </div>
         <button type="button" class="add-ingredient">Adicionar novo ingrediente</button>
@@ -60,7 +60,7 @@
         <h4>Modo de preparo</h4>
         <div id="steps">
             <div class="prepare">
-                <input type="text" name="step[]" value="" class="input-create">
+                <input type="text" name="step[]" value="{{item.step}}" class="input-create">
             </div>
         </div>
         <button type="button" class="add-step">Adicionar novo passo</button>
@@ -68,7 +68,7 @@
 
     <div class="recipe-admin">
         <h4>Informações adicionais</h4>
-        <textarea name="recipeInfo" class="input-info" form="form-create"></textarea>
+        <textarea name="recipeInfo" class="input-info" form="form-create" value="{{item.recipeInfo}}"></textarea>
     </div>
 
 </div>

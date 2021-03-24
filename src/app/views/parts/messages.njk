@@ -4,6 +4,18 @@
     </div>
 {% endif %}
 
+{% if messages.error %}
+    <div class="messages error">
+        {{messages.error}}
+    </div>
+{% endif %}
+
+{% if messages.success %}
+    <div class="messages success">
+        {{messages.success}}
+    </div>
+{% endif %}
+
 {% if success %}
     <div class="messages success">
         {{success}}
