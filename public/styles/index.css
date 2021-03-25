@@ -176,7 +176,6 @@ footer p {
 }
 
 .content {
-    font-family: 'Roboto', sans-serif;
     color: #444444;
     line-height: 28px;
     font-size: 18px;
@@ -184,6 +183,7 @@ footer p {
 
 .content p {
     margin: 20px 0;
+    font-family: 'Roboto', sans-serif;
 }
 
 .subtitle {
@@ -519,6 +519,11 @@ footer p {
     text-decoration: none;
     font-size: 14px;
     font-weight: bold;   
+}
+
+.chef-name {
+    display: flex;
+    align-items: center;
 }
 
 .chef-details {

@@ -21,10 +21,15 @@ module.exports = {
             const fileId = results.rows[0].id
             results = await Chef.create(req.body, fileId)
             chefId = results.rows[0].id
+
+            req.flash('success', "Chef criado com sucesso!")
             return res.redirect(`/admin/chefs/${chefId}/edit`)
 
         } catch (err) {
-            console.log(err)
+            console.error(err)
+            return res.render("admin/chefs/create", {
+                error: "Error!"
+            })
         }
 
     },
@@ -141,7 +146,7 @@ module.exports = {
             const keys = Object.keys(req.body)
 
             for (key of keys) {
-                if (req.body[key] == '' && key != "removed_files") {
+                if (req.body[key] == '' && key != "removed_files" && key != "avatar_url") {
                     return res.send("Please, fill all the fields")
                 }
             }
@@ -153,21 +158,35 @@ module.exports = {
                 await File.delete(removeFiles[0])
             }
 
-            if (req.files.length == 0)
+            if (req.files.length == 0 && req.body.removed_files.length > 0 )
                 return res.send('Please, send at least one image!')
+        
+            if (req.files.length > 0) {
+                let results = await File.create({ ...req.files[0] })
+                let fileId = results.rows[0].id
 
-            let results = await File.create({ ...req.files[0] })
-            let fileId = results.rows[0].id
-            
-            await Chef.update({
-                ...req.body, 
-                file_id: fileId
+                await Chef.update({
+                    ...req.body, 
+                    file_id: fileId
+                })
+            } else {
+                await Chef.delete(req.body.id)
+                
+                await Chef.update({ 
+                    ...req.body, 
+                    file_id: req.body.file_id 
             })
+            }
             
+            req.flash('success', "Chef atualizado com sucesso!")
             return res.redirect(`/admin/chefs/show`)
 
         } catch (err) {
-            console.log(err)
+            console.error(err)
+            return res.render("admin/chefs/edit", {
+                error: "Error!",
+                chef: req.body
+            })
         }
     },
     async delete(req, res) {
@@ -185,10 +204,15 @@ module.exports = {
 
                 await Chef.delete(req.body.id)
 
+                req.flash('success', "Chef deletado com sucesso!")
                 return res.redirect('/admin/chefs/show')
             }
         } catch (err) {
             console.log(err)
+            return res.render("admin/chefs/edit", {
+                error: "Error!",
+                chef: req.body
+            })
         }
 
     }

@@ -1,4 +1,7 @@
 const User = require("../models/user")
+const Recipe = require("../models/recipe")
+const File = require("../models/file")
+const RecipeFiles = require('../models/recipe-files')
 const generator = require('generate-password')
 const mailer = require('../../lib/mailer')
 
@@ -100,6 +103,19 @@ module.exports = {
     },
     async delete(req, res) {
         try {
+            let results = await Recipe.byUserId(req.body.id)
+            const recipes = results.rows.map(async recipe => {
+                let findRecipeFiles = await RecipeFiles.findFiles(recipe.id)
+                const filesId = findRecipeFiles.rows.map(file => {
+                        File.delete(file.file_id)
+                })
+                await Promise.all(filesId)
+                await RecipeFiles.delete(recipe.id)
+            })
+            await Promise.all(recipes)
+
+            await Recipe.deleteByUserId(req.body.id)
+
             await User.delete(req.body.id)
 
             return res.render("admin/user/register", {
@@ -107,11 +123,8 @@ module.exports = {
             })
 
         }catch(err) {
-            console.error(err)
-            return res.render("admin/user/edit", {
-                user: req.body,
-                error: "Error ao deletar!"
-            }) 
+            req.flash('error', "Erro inesperado ao deletar!")
+            return res.redirect("/admin/users") 
         }
     }
 }

@@ -155,6 +155,10 @@ for (let stat of status) {
     })
 }
 
+const getQueryString = {
+    
+}
+
 document.querySelector(".add-ingredient").addEventListener("click", function addIngredients() {
     const ingredients = document.querySelector("#ingredients");
     const fieldContainer = document.querySelectorAll(".ingredient");

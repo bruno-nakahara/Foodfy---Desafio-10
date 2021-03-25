@@ -73,5 +73,15 @@ module.exports = {
          FROM recipe_files 
          LEFT JOIN files ON (recipe_files.file_id = files.id)
          WHERE recipe_files.recipe_id = $1`, [id])
+    },
+    byUserId(id) {
+        return db.query(`
+        SELECT recipes.*, chefs.name AS chef 
+        FROM recipes
+        LEFT JOIN chefs ON (chefs.id = recipes.chef_id) 
+        WHERE recipes.user_id = $1`, [id])
+    },
+    deleteByUserId(id) {
+        return db.query(`DELETE FROM recipes WHERE user_id = $1`, [id])
     }
 }

@@ -12,6 +12,7 @@ routes.get("/", sitesControllers.main)
 routes.get("/main/index", sitesControllers.main)
 
 routes.get("/main/about", function (req, res) {
+    console.log(req.session)
     return res.render("main/about")
 })
 

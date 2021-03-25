@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const User = require("../models/user")
+const Recipe = require("../models/recipe")
 const mailer = require('../../lib/mailer')
 const { hash } = require('bcryptjs')
 
@@ -8,13 +9,30 @@ module.exports = {
         return res.render('admin/session/login')
     },
     login(req, res) {
-        req.session.userId = req.user.id
-        req.session.admin = req.user.is_admin
-        return res.redirect("/admin/profile")
+        try {
+            
+            req.session.userId = req.user.id
+            req.session.admin = req.user.is_admin
+
+            return res.redirect("/admin/profile?alert=success&message=Logado")
+        } catch (err) {
+            console.error(err) 
+            return res.render("admin/session/login", { error: "Falha ao logar!", user: req.body })
+        }
+        
     },
     logout(req, res) {
-        req.session.destroy()
-        return res.redirect("/")
+        try {
+            req.logout()
+            
+            return res.render("main/about", { 
+                success: "Logout!",  
+            })
+        }catch(err) {
+            console.error(err)
+            return res.render("admin/profile/profile", { error: "Falha Logout!" })
+        }
+        
     },
     forgotForm(req, res) {
         return res.render("admin/session/forgot-password")

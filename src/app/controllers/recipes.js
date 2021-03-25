@@ -4,6 +4,21 @@ const RecipeFiles = require('../models/recipe-files')
 
 module.exports = {
     async post(req, res) {
+        const keys = Object.keys(req.body)
+    
+        for (key of keys) {
+            if (req.body[key] == "" && key != "recipeInfo") {
+                let results = await Recipe.chefOptions()
+                const options = results.rows
+
+                return res.render('admin/recipes/create', {
+                    item: req.body,
+                    chefsOptions: options,
+                    error: 'Preencha todos os campos'
+                })
+            }
+        }
+
         try {
             if (req.files.length == 0) {
                 return res.render('admin/recipes/create', {
@@ -39,19 +54,35 @@ module.exports = {
     async index(req, res) {
         try {
             let recipesData = []
-            let results = await Recipe.all()
-            const recipes = results.rows.map(async recipe => {
-                const recipeFile = await Recipe.allFiles(recipe.id)
-                const file = recipeFile.rows[0]
-                recipe = {
-                    ...recipe,
-                    src: `${req.protocol}://${req.headers.host}${file.file_path.replace("public", "")}`
-                }
-                return recipesData.push({
-                    ...recipe,
+            if (req.session.admin == true) {
+                let results = await Recipe.all()
+                const recipes = results.rows.map(async recipe => {
+                    const recipeFile = await Recipe.allFiles(recipe.id)
+                    const file = recipeFile.rows[0]
+                    recipe = {
+                        ...recipe,
+                        src: `${req.protocol}://${req.headers.host}${file.file_path.replace("public", "")}`
+                    }
+                    return recipesData.push({
+                        ...recipe,
+                    })
                 })
-            })
-            await Promise.all(recipes)
+                await Promise.all(recipes)
+            } else if (req.session.admin == false) {
+                let results = await Recipe.byUserId(req.session.userId)
+                const recipes = results.rows.map(async recipe => {
+                    const recipeFile = await Recipe.allFiles(recipe.id)
+                    const file = recipeFile.rows[0]
+                    recipe = {
+                        ...recipe,
+                        src: `${req.protocol}://${req.headers.host}${file.file_path.replace("public", "")}`
+                    }
+                    return recipesData.push({
+                        ...recipe,
+                    })
+                })
+                await Promise.all(recipes)
+            }
 
             return res.render("admin/recipes/index", { items: recipesData })
 
@@ -110,12 +141,37 @@ module.exports = {
         }
     },
     async put(req, res) {
-
         const keys = Object.keys(req.body)
-
+    
         for (key of keys) {
-            if (req.body[key] == "" && key != "removed_files" && key != "recipeInfo") {
-                return res.send('Please, fill all the fields')
+            if (key == "ingredients" || key == "step") {
+                if (req.body[key][0] == "") {
+                    let results = await Recipe.chefOptions()
+                    const options = results.rows
+
+                    return res.render('admin/recipes/edit', {
+                        item: {
+                            ...req.body,
+                            preparation: req.body.step
+                        },
+                        chefsOptions: options,
+                        error: 'Preencha todos os campos'
+                    })
+                }
+            }
+
+            if (req.body[key] == "" && key != "recipeInfo" && key != "removed_files") {
+                let results = await Recipe.chefOptions()
+                const options = results.rows
+
+                return res.render('admin/recipes/edit', {
+                    item: {
+                        ...req.body,
+                        preparation: req.body.step
+                    },
+                    chefsOptions: options,
+                    error: 'Preencha todos os campos'
+                })
             }
         }
 
@@ -156,9 +212,8 @@ module.exports = {
 
         } catch (err) {
             console.log(err)
-            return res.render("admin/recipes/edit", {
-                error: "Error!"
-            })
+            req.flash('error', "Erro ao atualizar!")
+            return res.redirect(`/admin/recipes/${recipeId}/edit`)
         }
     },
     async delete(req, res) {
@@ -176,9 +231,8 @@ module.exports = {
 
         } catch (err) {
             console.error(err)
-            return res.render("admin/recipes/edit", {
-                error: "Error!"
-            })
+            req.flash('error', "Erro ao deletar!")
+            return res.render(`admin/recipes/${recipeId}/edit`)
         }
     },
     async cheflist(req, res) {
