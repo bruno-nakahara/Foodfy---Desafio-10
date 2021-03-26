@@ -41,8 +41,7 @@ module.exports = {
             })
             await Promise.all(filesPromise)
 
-            req.flash('success', "Receita criada com sucesso!")
-            return res.redirect(`/admin/recipes/${recipeId}`)
+            return res.redirect(`/admin/recipes/${recipeId}?alert=success&message=Receita criada com sucesso!`)
 
         } catch (err) {
             console.log(err)
@@ -207,13 +206,11 @@ module.exports = {
             })
             await Promise.all(filesPromise)
 
-            req.flash('success', "Receita atualizada com sucesso!")
-            return res.redirect(`/admin/recipes/${recipeId}`)
+            return res.redirect(`/admin/recipes/${recipeId}?alert=success&message=Receita atualizada com sucesso!`)
 
         } catch (err) {
             console.log(err)
-            req.flash('error', "Erro ao atualizar!")
-            return res.redirect(`/admin/recipes/${recipeId}/edit`)
+            return res.redirect(`/admin/recipes/${recipeId}/edit?alert=error&message=Erro ao atualizar!`)
         }
     },
     async delete(req, res) {
@@ -226,13 +223,11 @@ module.exports = {
             await RecipeFiles.delete(req.body.id)
             await Recipe.delete(req.body.id)
 
-            req.flash('success', "Receita deletada com sucesso!")
-            return res.redirect("/admin/recipes")
+            return res.redirect("/admin/recipes?alert=success&message=Receita deletada com sucesso!")
 
         } catch (err) {
             console.error(err)
-            req.flash('error', "Erro ao deletar!")
-            return res.render(`admin/recipes/${recipeId}/edit`)
+            return res.redirect(`/admin/recipes/${recipeId}/edit?alert=error&message=Erro ao deletar a receita!`)
         }
     },
     async cheflist(req, res) {

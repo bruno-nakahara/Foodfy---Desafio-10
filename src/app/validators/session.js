@@ -55,7 +55,7 @@ async function reset(req, res, next) {
     if (!user) return res.render("admin/session/password-reset", {
         user: req.body,
         token,
-        error: "Usuário não cadastrado!"
+        error: "Usuário não cadastrado ou campo vazio!"
     })
 
     if (!password) return res.render('admin/session/password-reset', {

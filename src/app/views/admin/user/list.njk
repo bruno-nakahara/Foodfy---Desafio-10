@@ -18,7 +18,7 @@
                         <p>{{user.email}}</p>
                         <div class="links">
                             <a href="users/{{user.id}}/edit" class="link-edit">Editar</a>
-                            <button class="user-delete-btn" type="submit">Remover</button>
+                            {%if user.user_account != true %}<button class="user-delete-btn" type="submit">Remover</button> {% endif %}
                         </div>
                         <input type="hidden" name="id" value="{{user.id}}">
                     </div>

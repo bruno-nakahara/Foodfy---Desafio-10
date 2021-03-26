@@ -3,6 +3,9 @@ const Chef = require("../models/chef")
 const Site = require("../models/site")
 
 module.exports = {
+    about(req, res) {
+        return res.render("main/about")
+    },
     async main(req, res) {
         try {
             let recipesData = []

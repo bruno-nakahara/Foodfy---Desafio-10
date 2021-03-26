@@ -57,7 +57,17 @@ module.exports = {
         try {
             const users = await User.allUsers()
 
-            return res.render("admin/user/list", { users })
+            let loggedUserAccount = users.filter(account => account.id == req.session.userId)
+            const otherUsersAccount = users.filter(account => account.id != req.session.userId)
+            
+            loggedUserAccount[0] = {
+                ...loggedUserAccount[0],
+                user_account: true
+            }
+            
+            const allUsers = otherUsersAccount.concat(loggedUserAccount)
+
+            return res.render("admin/user/list", { users: allUsers })
         }catch(err) {
             console.error(err)
         }

@@ -6,6 +6,12 @@
     }
 }
 
+@keyframes inputborderchange {
+    from {border:2px solid #dddddd}
+    50% {border: 2px solid #DC4747;}
+    to {border:2px solid #dddddd}
+}
+
 .messages {
     width: 344px;
     height: 135px;
@@ -32,3 +38,7 @@
 .messages.success {
     background: #01B12A;  
 }
+
+.alert-error {
+    animation: inputborderchange 3s;
+} 

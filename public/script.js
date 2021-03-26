@@ -1,5 +1,6 @@
 const cards = document.querySelectorAll('.card')
 const status = document.querySelectorAll('.status')
+const checkError = document.querySelector('.error')
 
 const PhotosUpload = {
     input: "",
@@ -120,6 +121,73 @@ const ImageGallery = {
     }
 }
 
+if (window.location.pathname) {
+
+    let pathContent = window.location.pathname.split("/")
+    console.log(pathContent)
+    if (pathContent[1] == "main") {
+        
+        if (pathContent[2] == "about"){
+            
+            let page = document.querySelector("a[href='/main/about']")
+            page.classList.add("link-bold-main")
+
+        }else if (pathContent[2] == "recipes") {
+
+            let page = document.querySelector("a[href='/main/recipes']")
+            page.classList.add("link-bold-main")
+
+        }else if (pathContent[2] == "chefs") {
+
+            let page = document.querySelector("a[href='/main/chefs']")
+            page.classList.add("link-bold-main")
+
+        }
+        
+    } else if (pathContent[1] == "admin") {
+
+        if (pathContent[2] == "users" || pathContent[2] == "profile"){
+            
+            let page = document.querySelector("a[href='/admin/users']")
+            page.classList.add("link-bold-admin")
+
+        }else if (pathContent[2] == "recipes") {
+
+            let page = document.querySelector("a[href='/admin/recipes']")
+            page.classList.add("link-bold-admin")
+
+        }else if (pathContent[2] == "chefs") {
+
+            let page = document.querySelector("a[href='/admin/chefs/show']")
+            page.classList.add("link-bold-admin")
+
+        }
+    }   
+}
+
+if (location.search) {
+
+    const divAlert = document.querySelector(".alert")
+    const params = new URLSearchParams(document.location.search)
+    const type = params.get("alert")
+    const message = params.get("message")
+
+    if (type == "success") {
+        divAlert.classList.add("messages", "success")
+        divAlert.innerHTML = message  
+    } else if (type == "error") {
+        divAlert.classList.add("messages", "error")
+        divAlert.innerHTML = message
+    }
+}
+
+if (checkError) {
+
+    let inputs = document.querySelectorAll(".input-create").forEach(input => {
+        input.classList.add("alert-error")
+    })
+}
+
 for (let card of cards) {
     card.addEventListener("click", function () {
         const recipeId = card.getAttribute("id")
@@ -155,10 +223,6 @@ for (let stat of status) {
     })
 }
 
-const getQueryString = {
-    
-}
-
 document.querySelector(".add-ingredient").addEventListener("click", function addIngredients() {
     const ingredients = document.querySelector("#ingredients");
     const fieldContainer = document.querySelectorAll(".ingredient");
@@ -184,3 +248,5 @@ document.querySelector(".add-step").addEventListener("click", function addSteps(
     ingredients.appendChild(newField);
 
 })
+
+

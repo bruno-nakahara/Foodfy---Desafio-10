@@ -10,7 +10,6 @@ module.exports = {
     },
     login(req, res) {
         try {
-            
             req.session.userId = req.user.id
             req.session.admin = req.user.is_admin
 
@@ -23,11 +22,8 @@ module.exports = {
     },
     logout(req, res) {
         try {
-            req.logout()
-            
-            return res.render("main/about", { 
-                success: "Logout!",  
-            })
+            req.session.destroy()
+            return res.redirect("/?alert=success&message=Logoff")
         }catch(err) {
             console.error(err)
             return res.render("admin/profile/profile", { error: "Falha Logout!" })

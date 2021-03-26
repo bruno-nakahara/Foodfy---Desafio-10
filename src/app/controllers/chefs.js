@@ -22,8 +22,7 @@ module.exports = {
             results = await Chef.create(req.body, fileId)
             chefId = results.rows[0].id
 
-            req.flash('success', "Chef criado com sucesso!")
-            return res.redirect(`/admin/chefs/${chefId}/edit`)
+            return res.redirect(`/admin/chefs/${chefId}/edit?alert=success&message=Chef criado!`)
 
         } catch (err) {
             console.error(err)
@@ -178,8 +177,7 @@ module.exports = {
             })
             }
             
-            req.flash('success', "Chef atualizado com sucesso!")
-            return res.redirect(`/admin/chefs/show`)
+            return res.redirect(`/admin/chefs/show?alert=success&message=Chef atualizado com sucesso!`)
 
         } catch (err) {
             console.error(err)
@@ -204,8 +202,7 @@ module.exports = {
 
                 await Chef.delete(req.body.id)
 
-                req.flash('success', "Chef deletado com sucesso!")
-                return res.redirect('/admin/chefs/show')
+                return res.redirect('/admin/chefs/show?alert=success&message=Chef deletado com sucesso!')
             }
         } catch (err) {
             console.log(err)

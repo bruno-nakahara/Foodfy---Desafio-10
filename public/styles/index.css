@@ -56,6 +56,11 @@ footer p {
     font-size: 16px;
 }
 
+.link-bold-main {
+    font-weight: bold;
+    color: black;
+}
+
 .search {
     position: absolute;
     right: 0px;
@@ -287,11 +292,16 @@ footer p {
 }
 
 #header-container .links-admin a {
-    color: #FFF;
+    color: #999999;
     font-family: Helvetica;
     font-size: 15px;
     text-decoration: none;
     margin-right: 30px;
+}
+
+#header-container .links-admin a.link-bold-admin {
+    font-weight: bold;
+    color: #FFFFFF;
 }
 
 .container-create {

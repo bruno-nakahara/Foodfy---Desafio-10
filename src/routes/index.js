@@ -11,10 +11,7 @@ routes.get("/", sitesControllers.main)
 
 routes.get("/main/index", sitesControllers.main)
 
-routes.get("/main/about", function (req, res) {
-    console.log(req.session)
-    return res.render("main/about")
-})
+routes.get("/main/about", sitesControllers.about)
 
 routes.get("/main/recipes", sitesControllers.all)
 
