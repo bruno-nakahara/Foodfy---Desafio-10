@@ -11,5 +11,9 @@
 5. Páginas dinâmicas utilizando Nunjucks
 6. Upload de imagens utilizando Multer
 
+<h3>Tecnologias:</h3>
 
-
+<ul>
+  <li>HTML</li>
+  <li>HTML</li>
+</ul>
