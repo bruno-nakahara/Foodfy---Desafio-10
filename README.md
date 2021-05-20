@@ -15,5 +15,15 @@
 
 <ul>
   <li>HTML</li>
-  <li>HTML</li>
+  <li>CSS</li>
+  <li>Javascript</li>
+  <li>NodeJS</li>
+  <li>Express</li>
+  <li>Nodemailer</li>
+  <li>Express Session</li>
+  <li>Multer</li>
+  <li>PostgreSQL</li>
+  <li>BcryptJS</li>
+  <li>PostgreSQL</li>
+  <li>Faker</li>
 </ul>
