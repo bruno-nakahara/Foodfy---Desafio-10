@@ -24,6 +24,5 @@
   <li>Multer</li>
   <li>PostgreSQL</li>
   <li>BcryptJS</li>
-  <li>PostgreSQL</li>
   <li>Faker</li>
 </ul>
